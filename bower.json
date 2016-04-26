@@ -1,0 +1,27 @@
+{
+  "name": "sb-voting-grid",
+  "version": "1.0.7",
+  "authors": [
+    "Beavers <beavers@inspace.com>"
+  ],
+  "description": "An element providing a voting grid that allows users to vote on any type of content",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "seed"
+  ],
+  "main": "sb-voting-grid.html",
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "homepage": "https://github.com/<USERNAME>/seed-element/",
+  "ignore": [
+    "/.*",
+    "/test/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.2.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "^4.0.0"
+  }
+}

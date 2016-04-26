@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-card/paper-card.html">
 
 <!--
 An element providing a voting grid that allows users to vote on any type of content
@@ -29,8 +30,14 @@ Example:
       }
     </style>
 
-    <content></content>
-    <paper-icon-button icon="icons:thumb-up" title="Love it!"></paper-icon-button>
+    <paper-card heading="[[name]]">
+      <div class="card-content">
+       <content></content>
+      </div>
+      <div class="card-actions">
+        <paper-icon-button id="voteButton" icon="icons:thumb-up" title="Love it!" on-tap="_registerUpVote"></paper-icon-button>
+      </div>
+    </paper-card>
 
   </template>
 
@@ -39,7 +46,9 @@ Example:
       is: 'sb-votable-item',
 
       properties: {
-
+        name: {
+          type: String
+        }
       },
 
       // Element Lifecycle
@@ -70,6 +79,11 @@ Example:
       },
 
       // Element Behavior
+
+      _registerUpVote: function() {
+        console.log('up vote', this.name);
+        this.$.voteButton.disabled = true;
+      }
     });
   </script>
 </dom-module>

@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-badge/paper-badge.html">
 <link rel="import" href="../paper-card/paper-card.html">
 
 <!--
@@ -20,7 +21,7 @@ Example:
   <template>
     <style>
       :host {
-        display: block;
+        display: inline-block;
         box-sizing: border-box;
       }
 
@@ -35,6 +36,7 @@ Example:
       </div>
       <div class="card-actions">
         <paper-icon-button id="voteButton" icon="icons:thumb-up" title="Love it!" on-tap="_registerUpVote"></paper-icon-button>
+        <paper-badge for="voteButton" label="{{votes}}">
       </div>
     </paper-card>
 
@@ -60,9 +62,9 @@ Example:
         },
 
         /**
-         * `totalVotes` indicates how many times this item has been up-voted.
+         * `votes` indicates how many times this item has been up-voted.
          */
-        totalVotes: {
+        votes: {
           type: Number,
           value: 0,
           notify: true
@@ -102,15 +104,19 @@ Example:
        * The `sb-votable-item-up-vote` event is fired whenever a user clicks the up-vote button.
        *
        * @event sb-votable-item-up-vote
-       * @detail {{id: String, name: String, totalVotes: Number}}
+       * @detail {{id: String, name: String, votes: Number}}
        */
 
+      /**
+       * Register an up-vote for the item and fire an sb-votable-item-up-vote with our current state
+       *
+       */
       _registerUpVote: function() {
         this.$.voteButton.disabled = true;
         this.fire('sb-votable-item-up-vote', {
           id: this.id,
           name: this.name,
-          totalVotes: this.totalVotes
+          votes: this.votes
         });
       }
     });

@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>sb-votable-item Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../sb-voting-grid.html">
+    <link rel="import" href="../sb-votable-item.html">
+  </head>
+  <body unresolved>
+
+    <p>An example of <code>&lt;sb-votable-item&gt;</code>:</p>
+
+    <sb-voting-grid id="memes_vote" name="The great meme-off">
+      <sb-votable-item id="voting_option_1" name="Voting Option 1">
+        <img src="http://memesvault.com/wp-content/uploads/Best-Meme-Pictures-08.jpg" width="250" height="250" />
+      </sb-votable-item>
+      <sb-votable-item id="voting_option_2" name="Voting Option 2">
+        <img src="http://www.listicled.com/wp-content/uploads/2016/04/best_memes_of_2012_bro_my_god_120512_12_by_mayaustin1995-d6viix5.jpg" width="250" height="250" />
+      </sb-votable-item>
+      <sb-votable-item id="voting_option_3" name="Voting Option 3">
+        <img src="https://s-media-cache-ak0.pinimg.com/736x/78/a7/85/78a785d74c7efb0d73141a44ca6680ca.jpg" width="250" height="250" />
+      </sb-votable-item>
+      <sb-votable-item id="voting_option_4" name="Voting Option 4">
+        <img src="http://36.media.tumblr.com/bcd0a3758dbe22f44bcd963af99d42fe/tumblr_nn6zoah3Eu1utenf2o1_500.jpg" width="250" height="250" />
+      </sb-votable-item>
+      <sb-votable-item id="voting_option_5" name="Voting Option 5">
+        <img src="http://www.relatably.com/m/img/best-memes-of-all-time-2014/the-best-baby-memes-of-all-time-023.jpg" width="250" height="250" />
+      </sb-votable-item>
+      <sb-votable-item id="voting_option_6" name="Voting Option 6">
+        <img src="https://s-media-cache-ak0.pinimg.com/736x/79/3b/70/793b7005c4a7d4fe8f39303c9fe34468.jpg" width="250" height="250" />
+      </sb-votable-item>
+    </sb-votable-item>
+
+    <script>
+      var seedElement = document.querySelector('sb-voting-grid');
+
+
+    </script>
+
+  </body>
+</html>

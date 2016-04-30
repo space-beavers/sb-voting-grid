@@ -18,7 +18,7 @@ Custom votable items
       </sb-votable-item>
     </sb-voting-grid>
 
-@demo demo/index.html
+@demo demo/voting-grid.html
 @hero hero.svg
 -->
 
@@ -40,7 +40,33 @@ Custom votable items
       is: 'sb-voting-grid',
 
       properties: {
+        /**
+         * `id` unique id for the voting grid
+         */
+        id: {
+          type: String
+        },
 
+        /**
+         * `name` the display name the grouping of your grid
+         */
+        name: {
+          type: String
+        },
+
+        /**
+         * `votes` keeps the current state of the votable items within the grid
+         */
+        votes: {
+          type: Array,
+          value: [],
+          notify: true
+        }
+
+      },
+
+      listeners: {
+        'sb-votable-item-up-vote': '_itemUpVoted'
       },
 
       // Element Lifecycle
@@ -69,6 +95,27 @@ Custom votable items
         //
         // Use this to clean up anything you did in `attached`.
       },
+
+      /**
+       * Hooray! A user has upvoted one of the items..
+       * TODO: fire event here to let the implemented know an item has been upvoted..
+       *
+       */
+      _itemUpVoted: function(event) {
+        var votableItem = event.detail;
+        // if we haven't registered any votes for this item yet..create a new space
+        if(!this.votes[votableItem.id]) {
+          this.votes[votableItem.id] = {
+            id: votableItem.id,
+            name: votableItem.name,
+            votes: 0
+          }
+
+          this.votes[votableItem.id].votes += 1;
+          console.log('votes are', this.votes);
+        }
+
+      }
 
       // Element Behavior
     });

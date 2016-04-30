@@ -50,7 +50,6 @@
           myEl.addEventListener('sb-votable-item-up-vote', function(event) {
             assert.equal(event.detail.id, 'voting_item_1');
             assert.equal(event.detail.name, 'Voting Option 1');
-            assert.equal(event.detail.votes, 3);
             done();
           });
           myEl._registerUpVote();

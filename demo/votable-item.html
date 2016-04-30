@@ -18,7 +18,10 @@
     <script>
       var seedElement = document.querySelector('sb-votable-item');
 
-
+      // listen for the item up vote and set the new vote back to the element.
+      document.addEventListener("sb-votable-item-up-vote", function(e) {
+        seedElement.votes += 1;
+      });
     </script>
 
   </body>

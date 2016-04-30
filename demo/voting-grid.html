@@ -12,7 +12,7 @@
 
     <p>An example of <code>&lt;sb-votable-item&gt;</code>:</p>
 
-    <sb-voting-grid id="memes_vote" name="The great meme-off">
+    <sb-voting-grid id="single_vote_grid" name="The great meme-off">
       <sb-votable-item id="voting_option_1" name="Voting Option 1">
         <img src="http://memesvault.com/wp-content/uploads/Best-Meme-Pictures-08.jpg" width="250" height="250" />
       </sb-votable-item>
@@ -31,10 +31,38 @@
       <sb-votable-item id="voting_option_6" name="Voting Option 6">
         <img src="https://s-media-cache-ak0.pinimg.com/736x/79/3b/70/793b7005c4a7d4fe8f39303c9fe34468.jpg" width="250" height="250" />
       </sb-votable-item>
-    </sb-votable-item>
+    </sb-voting-grid>
+
+
+    <p>An example of <code>&lt;sb-votable-item multi-vote&gt;</code>:</p>
+
+    <sb-voting-grid id="multi_vote_grid" name="Multi-vote grid" multi-vote>
+      <sb-votable-item id="mv_opt_1" name="Option 1">
+        <img src="http://memesvault.com/wp-content/uploads/Best-Meme-Pictures-08.jpg" width="250" height="250" />
+      </sb-votable-item>
+      <sb-votable-item id="mv_opt_2" name="Option 2">
+        <img src="http://www.listicled.com/wp-content/uploads/2016/04/best_memes_of_2012_bro_my_god_120512_12_by_mayaustin1995-d6viix5.jpg" width="250" height="250" />
+      </sb-votable-item>
+    </sb-voting-grid>
 
     <script>
-      var seedElement = document.querySelector('sb-voting-grid');
+      // single vote
+      var singleVoteGrid = document.getElementById('single_vote_grid');
+      var multiVoteGrid = document.getElementById('multi_vote_grid');
+
+      // listen for the item up vote and set the new vote back to the element.
+      document.addEventListener("sb-voting-grid-up-vote", function(e) {
+        var votableElement = document.getElementById(e.detail.id);
+        var parentId = votableElement.parentNode.getAttribute('id');
+
+        if('single_vote_grid' === parentId) {
+          singleVoteGrid.setItemVoteCount(votableElement.id, 1);
+        } else {
+          multiVoteGrid.setItemVoteCount(votableElement.id, 1);
+        }
+      });
+
+      // multi-vote
 
 
     </script>

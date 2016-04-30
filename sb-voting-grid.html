@@ -32,7 +32,7 @@ Custom votable items
     </style>
 
     <h1>&lt;sb-voting-grid&gt;</h1>
-    <content></content>
+    <content id="votablechildren" select="sb-votable-item"></content>
   </template>
 
   <script>
@@ -55,18 +55,36 @@ Custom votable items
         },
 
         /**
-         * `votes` keeps the current state of the votable items within the grid
+         * `multiVote` indicates if the user should be allowed to vote on multiple
+         * sb-votable-items
          */
-        votes: {
+        'multiVote': {
+          type: Boolean
+        },
+
+        /**
+         * `_votableItems` keeps the current state of the items withing the grid
+         *
+         * @type [VotableItem]
+         */
+        _votableItems: {
           type: Array,
-          value: [],
-          notify: true
+          value: []
+        },
+
+        /**
+         * reference map between ids and votableItemArrayIndex
+         * [votableItemId][_votableItemsArrayIndex]
+         */
+        _votableItemsIndexMap: {
+          type: Array,
+          value: []
         }
 
       },
 
       listeners: {
-        'sb-votable-item-up-vote': '_itemUpVoted'
+        'sb-votable-item-up-vote': '_itemUpvoted'
       },
 
       // Element Lifecycle
@@ -81,12 +99,13 @@ Custom votable items
       },
 
       attached: function() {
-        // `attached` fires once the element and its parents have been inserted
-        // into a document.
-        //
-        // This is a good place to perform any work related to your element's
-        // visual state or active behavior (measuring sizes, beginning animations,
-        // loading resources, etc).
+        this._votableItems = Polymer.dom(this.$.votablechildren).getDistributedNodes();
+
+        // #perf - create a reference map between ids and votableItemArrayIndex
+        var i;
+        for(i=0; i < this._votableItems.length; i++) {
+          this._votableItemsIndexMap[this._votableItems[i].id] = i;
+        }
       },
 
       detached: function() {
@@ -96,28 +115,53 @@ Custom votable items
         // Use this to clean up anything you did in `attached`.
       },
 
-      /**
-       * Hooray! A user has upvoted one of the items..
-       * TODO: fire event here to let the implemented know an item has been upvoted..
-       *
-       */
-      _itemUpVoted: function(event) {
-        var votableItem = event.detail;
-        // if we haven't registered any votes for this item yet..create a new space
-        if(!this.votes[votableItem.id]) {
-          this.votes[votableItem.id] = {
-            id: votableItem.id,
-            name: votableItem.name,
-            votes: 0
-          }
+      // Element Behavior
 
-          this.votes[votableItem.id].votes += 1;
-          console.log('votes are', this.votes);
+      /**
+       * Sets a new count for a `sb-votable-item`
+       *
+       * @param votableItemId Unique id of the `sb-votable-item`
+       * @param voteCount Total votes for this item
+       */
+      setItemVoteCount: function(votableItemId, voteCount) {
+        var item = this._votableItems[this._votableItemsIndexMap[votableItemId]];
+        if(item) {
+          item.votes = voteCount;
         }
 
+        //TODO: re-sort grid
+      },
+
+      /**
+       * The `sb-voting-grid-up-vote` event is fired whenever a user clicks the up-vote button of any
+       * child sb-votable-item.
+       *
+       * @event sb-voting-grid-up-vote
+       * @detail {{id: String, name: String}}
+       */
+
+      /**
+       * Hooray! A user has upvoted one of the items..
+       * send the event out + disable all other items from being voted on.
+       */
+      _itemUpvoted: function(event) {
+        var upvotedItem = event.detail;
+        this.fire('sb-voting-grid-up-vote', upvotedItem);
+        if(!this.multiVote) {
+          this._disableItems();
+        }
+      },
+
+      /**
+       * Disable voting ability for all other items except arg
+       * @param upvotedItem VotableItem
+       */
+      _disableItems: function() {
+        this._votableItems.forEach(function(item) {
+          item.disableVoting();
+        });
       }
 
-      // Element Behavior
     });
   </script>
 </dom-module>

@@ -35,7 +35,11 @@ Example:
        <content></content>
       </div>
       <div class="card-actions">
-        <paper-icon-button id="voteButton" icon="icons:thumb-up" title="Love it!" on-tap="_registerUpVote"></paper-icon-button>
+        <paper-icon-button id="voteButton"
+                           icon="icons:thumb-up"
+                           title="Love it!"
+                           on-tap="_registerUpVote"
+                           ></paper-icon-button>
         <paper-badge for="voteButton" label="{{votes}}">
       </div>
     </paper-card>
@@ -62,6 +66,13 @@ Example:
         },
 
         /**
+         * `disabled` indicates that the user has already voted on this item
+         */
+        disabled: {
+          type: Boolean
+        },
+
+        /**
          * `votes` indicates how many times this item has been up-voted.
          */
         votes: {
@@ -83,12 +94,9 @@ Example:
       },
 
       attached: function() {
-        // `attached` fires once the element and its parents have been inserted
-        // into a document.
-        //
-        // This is a good place to perform any work related to your element's
-        // visual state or active behavior (measuring sizes, beginning animations,
-        // loading resources, etc).
+        if(this.disabled) {
+          _disableVoting();
+        }
       },
 
       detached: function() {
@@ -104,19 +112,25 @@ Example:
        * The `sb-votable-item-up-vote` event is fired whenever a user clicks the up-vote button.
        *
        * @event sb-votable-item-up-vote
-       * @detail {{id: String, name: String, votes: Number}}
+       * @detail {{id: String, name: String}}
        */
+
+      /**
+       * Do not allow the user to vote on this item.
+       */
+       disableVoting: function() {
+        this.$.voteButton.disabled = true;
+       },
 
       /**
        * Register an up-vote for the item and fire an sb-votable-item-up-vote with our current state
        *
        */
       _registerUpVote: function() {
-        this.$.voteButton.disabled = true;
+        this.disableVoting();
         this.fire('sb-votable-item-up-vote', {
           id: this.id,
-          name: this.name,
-          votes: this.votes
+          name: this.name
         });
       }
     });

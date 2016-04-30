@@ -15,7 +15,7 @@
     <!-- You can use the document as a place to set up your fixtures. -->
     <test-fixture id="sb-voting-grid-fixture">
       <template>
-        <sb-voting-grid id="vote_id">
+        <sb-voting-grid id="meme_votes_id" name="Meme Votes!">
 
         </sb-voting-grid>
       </template>
@@ -31,7 +31,26 @@
         });
 
         test('defines the "id" property', function() {
-          assert.equal(myEl.id, 'vote_id');
+          assert.equal(myEl.id, 'voting_grid_id');
+        });
+
+        test('defines the "name" property', function() {
+          assert.equal(myEl.name, 'Voting Grids');
+        });
+
+
+        test('fires up-vote', function(done) {
+          myEl.addEventListener('sb-voting-grid-up-vote', function(event) {
+            assert.equal(event.detail.id, 'voting_item_1');
+            assert.equal(event.detail.name, 'Voting Option 1');
+            done();
+          });
+          myEl._itemUpvoted({
+            detail: {
+              id: 'voting_item_1',
+              name: 'Voting Option 1'
+            }
+          });
         });
 
       });

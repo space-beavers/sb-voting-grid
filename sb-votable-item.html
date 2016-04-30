@@ -8,8 +8,7 @@ An element providing a voting grid that allows users to vote on any type of cont
 
 Example:
 
-    <sb-votable-item name="Voting Option 1">
-      <h3>Voting option 1</h3>
+    <sb-votable-item id="unique_id" name="Voting Option 1">
       <img src="http://placehold.it/350x150" />
     </sb-votable-item>
 
@@ -46,8 +45,27 @@ Example:
       is: 'sb-votable-item',
 
       properties: {
+        /**
+         * `id` unique id for the item
+         */
+        id: {
+          type: String
+        },
+
+        /**
+         * `name` the display name for the item
+         */
         name: {
           type: String
+        },
+
+        /**
+         * `totalVotes` indicates how many times this item has been up-voted.
+         */
+        totalVotes: {
+          type: Number,
+          value: 0,
+          notify: true
         }
       },
 
@@ -80,9 +98,20 @@ Example:
 
       // Element Behavior
 
+      /**
+       * The `sb-votable-item-up-vote` event is fired whenever a user clicks the up-vote button.
+       *
+       * @event sb-votable-item-up-vote
+       * @detail {{id: String, name: String, totalVotes: Number}}
+       */
+
       _registerUpVote: function() {
-        console.log('up vote', this.name);
         this.$.voteButton.disabled = true;
+        this.fire('sb-votable-item-up-vote', {
+          id: this.id,
+          name: this.name,
+          totalVotes: this.totalVotes
+        });
       }
     });
   </script>

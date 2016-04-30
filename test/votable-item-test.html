@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <!-- Step 1: import the element to test -->
+    <link rel="import" href="../sb-votable-item.html">
+  </head>
+  <body>
+
+    <!-- You can use the document as a place to set up your fixtures. -->
+    <test-fixture id="sb-votable-item-fixture">
+      <template>
+        <sb-votable-item id="voting_item_1" name="Voting Option 1" total-votes="3">
+          <img src="http://placehold.it/350x150" />
+        </sb-votable-item>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('<sb-votable-item>', function() {
+
+        var myEl;
+
+        setup(function() {
+          myEl = fixture('sb-votable-item-fixture');
+        });
+
+        // property tests
+
+        test('defines the "id" property', function() {
+          assert.equal(myEl.id, 'voting_item_1');
+        });
+
+        test('defines the "name" property', function() {
+          assert.equal(myEl.name, 'Voting Option 1');
+        });
+
+        test('defines the "totalVotes" property', function() {
+          assert.equal(myEl.totalVotes, 3);
+        });
+
+        // event tests
+
+        test('fires up-vote', function(done) {
+          myEl.addEventListener('sb-votable-item-up-vote', function(event) {
+            assert.equal(event.detail.id, 'voting_item_1');
+            assert.equal(event.detail.name, 'Voting Option 1');
+            assert.equal(event.detail.totalVotes, 3);
+            done();
+          });
+          myEl._registerUpVote();
+        });
+
+      });
+    </script>
+
+  </body>
+</html>

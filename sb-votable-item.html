@@ -25,12 +25,16 @@ Example:
         box-sizing: border-box;
       }
 
+      paper-card {
+        margin: 20px;
+      }
+
       paper-icon-button {
         display: block;
       }
     </style>
 
-    <paper-card heading="[[name]]">
+    <paper-card heading="[[name]]>">
       <div class="card-content">
        <content></content>
       </div>
@@ -40,8 +44,8 @@ Example:
                            title="Love it!"
                            on-tap="_registerUpVote"
                            ></paper-icon-button>
-        <paper-badge for="voteButton" label="{{votes}}">
       </div>
+      <paper-badge label='{{votes}}'>
     </paper-card>
 
   </template>

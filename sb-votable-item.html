@@ -4,6 +4,9 @@
 <link rel="import" href="../paper-badge/paper-badge.html">
 <link rel="import" href="../paper-card/paper-card.html">
 
+<!-- sb elements -->
+<link rel="import" href="../sb-pluralize/sb-pluralize.html">
+
 <!--
 An element providing a voting grid that allows users to vote on any type of content
 
@@ -37,7 +40,7 @@ Example:
         display: inline-block;
       }
     </style>
-
+    <sb-pluralize id="pluralizeEle"></sb-pluralize>
     <paper-card heading="[[name]]">
       <div class="card-content">
        <content></content>
@@ -154,9 +157,9 @@ Example:
        */
       computeLikedMessage: function(votes) {
         var message = '';
+        console.log('test', this.$.pluralizeEle.pluralize('people', this.votes));
         if(this.votes > 0) {
-          var message = this.votes;
-          message += (this.votes === 1) ? ' person liked this' : ' people liked this';
+          var message = this.votes + ' ' + this.$.pluralizeEle.pluralize('people', this.votes) + ' liked this';
         }
         return message;
       }

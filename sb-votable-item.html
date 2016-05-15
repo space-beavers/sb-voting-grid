@@ -44,8 +44,8 @@ Example:
                            title="Love it!"
                            on-tap="_registerUpVote"
                            ></paper-icon-button>
+                           <span id="likedMessage">{{likedMessage}}</span>
       </div>
-      <paper-badge label='{{votes}}'>
     </paper-card>
 
   </template>
@@ -83,6 +83,11 @@ Example:
           type: Number,
           value: 0,
           notify: true
+        },
+
+        likedMessage: {
+          type: String,
+          computed: 'computeLikedMessage(votes)'
         }
       },
 
@@ -136,7 +141,22 @@ Example:
           id: this.id,
           name: this.name
         });
+      },
+
+      /**
+       * Create a macho string that tells the user how many votes this item has
+       * return '' if votes === 0 otherwise returns message
+       * @param votes - bound to votes property
+       */
+      computeLikedMessage: function(votes) {
+        var message = '';
+        if(this.votes > 0) {
+          var message = this.votes;
+          message += (this.votes === 1) ? ' person liked this' : ' people liked this';
+        }
+        return message;
       }
+
     });
   </script>
 </dom-module>

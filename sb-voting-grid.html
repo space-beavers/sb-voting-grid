@@ -26,12 +26,15 @@ Custom votable items
   <template>
     <style>
       :host {
+        @apply(--layout-horizontal-reverse);
+        @apply(--layout-flex);
         display: block;
         box-sizing: border-box;
+
       }
+
     </style>
 
-    <h1>&lt;sb-voting-grid&gt;</h1>
     <content id="votablechildren" select="sb-votable-item"></content>
   </template>
 

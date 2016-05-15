@@ -15,7 +15,7 @@
     <!-- You can use the document as a place to set up your fixtures. -->
     <test-fixture id="sb-votable-item-fixture">
       <template>
-        <sb-votable-item id="voting_item_1" name="Voting Option 1" total-votes="3">
+        <sb-votable-item id="voting_item_1" name="Voting Option 1" votes="1">
           <img src="http://placehold.it/350x150" />
         </sb-votable-item>
       </template>
@@ -30,6 +30,10 @@
           myEl = fixture('sb-votable-item-fixture');
         });
 
+        function getRandomIntInclusive(min, max) {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
         // property tests
 
         test('defines the "id" property', function() {
@@ -41,7 +45,33 @@
         });
 
         test('defines the "votes" property', function() {
-          assert.equal(myEl.votes, 3);
+          assert.equal(myEl.votes, 1);
+        });
+
+        test('returns singular version with one vote', function() {
+          myEl.votes = 1;
+          assert.equal(myEl.computeLikedMessage(myEl.votes), '1 person liked this');
+        });
+
+        test('returns plural version with multiple votes', function() {
+          myEl.votes = getRandomIntInclusive(2, 50);
+          assert.equal(myEl.computeLikedMessage(myEl.votes), myEl.votes + ' people liked this');
+        });
+
+        test('computeLikedMessage is blank if there are zero votes', function() {
+          myEl.votes = 0;
+          assert.equal(myEl.computeLikedMessage(myEl.votes), '');
+        });
+
+
+        test('likes rendered to the card', function() {
+          // singular
+          myEl.votes = 1;
+          assert.equal(myEl.$.likedMessage.innerText, myEl.votes + ' person liked this');
+
+          // plural
+          myEl.votes = getRandomIntInclusive(2, 50);
+          assert.equal(myEl.$.likedMessage.innerText, myEl.votes + ' people liked this');
         });
 
         // event tests

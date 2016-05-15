@@ -30,7 +30,11 @@ Example:
       }
 
       paper-icon-button {
-        display: block;
+        display: inline-block;
+      }
+
+      #likedMessage {
+        display: inline-block;
       }
     </style>
 
@@ -44,7 +48,7 @@ Example:
                            title="Love it!"
                            on-tap="_registerUpVote"
                            ></paper-icon-button>
-                           <span id="likedMessage">{{likedMessage}}</span>
+        <span id="likedMessage">{{likedMessage}}</span>
       </div>
     </paper-card>
 

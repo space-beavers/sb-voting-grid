@@ -157,7 +157,6 @@ Example:
        */
       computeLikedMessage: function(votes) {
         var message = '';
-        console.log('test', this.$.pluralizeEle.pluralize('people', this.votes));
         if(this.votes > 0) {
           var message = this.votes + ' ' + this.$.pluralizeEle.pluralize('people', this.votes) + ' liked this';
         }
